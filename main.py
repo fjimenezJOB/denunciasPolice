@@ -40,9 +40,26 @@ def login():
             return render_template('login.html', error=error, **content)
     return render_template('login.html', **content)
 
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    context = {
+        'titulo':'Rellena el formulario para registrar tu denuncia.'
+    }
+    if request.method == 'POST':
+        denuncia = request.POST.get('denuncia')
+        lugar =  request.POST.get('lugar')
+        fecha = request.POST.get('fecha')
+        hora = request.POST.get('hora')
+        foto = request.POST.get('foto')
+
+    return render_template('index.html', **context)
+
+@app.route('/denuncia', methods=['GET', 'POST'])
+def denuncia():
+    context = {
+        'titulo' : 'Rellena el formulario para registrar tu denuncia.'
+    }
+    return render_template('denuncia.html', **context) 
 
 
 @app.route('/register', methods=['GET', 'POST'])
