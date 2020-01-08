@@ -1,0 +1,31 @@
+{% extends 'layout.html'%}
+{% block title%}
+{{super() }}
+Register
+{% endblock %}
+
+{% block main %}
+{% if error %}
+<h1>Este email ya existe en la base de datos !!, por favor vaya a Logearse: <br> <a class="button is-info"
+        href="{{ url_for('login') }}">Login</a></h1>
+
+{% endif %}
+<form action="{{ url_for('register') }}" method="POST" class="">
+    <label for="name">Nombre:
+        <input class="input" type="text" name="name" id="" auto-focus required>
+    </label>
+    <label for="apellidos">Apellidos:
+        <input class="input" type="text" name="apellidos" id="" required>
+    </label>
+    <label for="email">Email:
+        <input class="input" type="text" name="email" id="" required>
+    </label>
+    <label for="password">Password:
+        <input class="input" type="password" name="password" id="" required>
+    </label>
+    <label for="tipo">DNI:
+        <input class="input" type="text" name="dni" required>
+    </label>
+    <button class="button is-info" type="submit">Enviar</button>
+</form>
+{% endblock %}

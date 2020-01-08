@@ -1,6 +1,7 @@
 from flask import session
 from pymongo import MongoClient
 
+
 MONGO_URL_ATLAS = 'mongodb+srv://franjimenez:Francisco1231998@develop-0hasi.mongodb.net/test?retryWrites=true&w=majority'
 
 client = MongoClient(MONGO_URL_ATLAS, ssl_cert_reqs=False)
@@ -16,11 +17,11 @@ def loginUser(email):
     collection = db['users']
     user = {}
     resultados = collection.find(
-        {'email': email, 'activo' : 1}, {'_id': 0, 'name': 1, 'password': 1, 'email': 1, 'tipo': 1})
+        {'email': email, 'activo': 1}, {'_id': 0, 'name': 1, 'password': 1, 'email': 1, 'tipo': 1, 'dni': 1})
 
     for documento in resultados:
         user.update(
-            {'email': documento['email'], 'name': documento['name'], 'password': documento['password'], 'tipo': documento['tipo']})
+            {'email': documento['email'], 'name': documento['name'], 'password': documento['password'], 'dni': documento['dni']})
 
     if user == '{}':
         noRegistrado = True
@@ -29,7 +30,7 @@ def loginUser(email):
     return user, noRegistrado
 
 
-def crearUsuario(nombre, apellido, email, password, tipo):
+def crearUsuario(nombre, apellido, email, password, dni):
     """
         Primero comprueba que el email no este registrado previamente en la base de datos, tanto si esta desactivado como si no
         Registra los usuarios en la base de datos.
@@ -50,19 +51,8 @@ def crearUsuario(nombre, apellido, email, password, tipo):
 
     if yaRegistrado == False:
         collection.insert(
-            {'name': nombre, 'apellidos': apellido, 'email': email, 'password': password, 'tipo': tipo, 'activo' : 1})
+            {'name': nombre, 'apellidos': apellido, 'email': email, 'password': password, 'activo': 1, 'dni' : dni})
     return yaRegistrado
-
-def insertarCasa(tipo, ficha):
-    """
-        Inserta casas y pisos en la base de datos.
-    """
-    if tipo == 'casa':
-        collection = db['casas']
-    elif tipo == 'piso':
-        collection = db['pisos']
-
-    collection.insert_one(ficha)
 
 
 def sacarCasa(tipo):
@@ -109,6 +99,7 @@ def sacarUsuarios():
         usuarios.append(documento)
 
     return usuarios
+
 
 def desactivarUsuario(email):
     """
