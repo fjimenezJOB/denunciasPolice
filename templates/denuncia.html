@@ -5,10 +5,29 @@ Denuncia
 {% endblock %}
 
 {% block main %}
-<form action="{{ url_for('misDenuncias') }}" method="POST">
-    <label for="">
-        <input type="text" name="" id="">
-    </label>
-</form>
+{% if error %}
+<div class="notification is-danger">
+    <h1>Ha habido un error al registrar la denuncia, por favor vuelvalo a intentar mas tarde o contacte con nosotros. <a class="button is-success" href="{{ url_for('register') }}">Registro</a></h1> <br>
+  </div>
+{% endif %}
 
+<form action="{{ url_for('denuncia') }}" method="POST">
+    <label for="lugar">Lugar :
+        <input type="text" name="lugar" id="" required autofocus>
+    </label><br><br>
+    <label for="fecha">Fecha :
+        <input type="date" name="fecha" id="" required>
+    </label><br><br>
+    <label for="hora">Hora :
+        <input type="time" name="hora" id="" required>
+    </label><br><br>
+    <label for="foto">Foto :
+        <input type="file" name="foto" id="">
+    </label><br><br>
+    <label for="denuncia">Denuncia :
+        <textarea class="textarea" name="denuncia" id="" cols="30" rows="10"></textarea>
+    </label><br><br>
+    <button class="button" type="submit">Enviar</button>
+</form><br><br>
+<a class="button is-danger" href="{{ url_for('index') }}">Volver</a>
 {% endblock %}

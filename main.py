@@ -43,23 +43,37 @@ def login():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     context = {
-        'titulo':'Rellena el formulario para registrar tu denuncia.'
+        'titulo' : 'Menu',
+        'subtitulo' : 'Opciones'
     }
-    if request.method == 'POST':
-        denuncia = request.POST.get('denuncia')
-        lugar =  request.POST.get('lugar')
-        fecha = request.POST.get('fecha')
-        hora = request.POST.get('hora')
-        foto = request.POST.get('foto')
-
     return render_template('index.html', **context)
 
 @app.route('/denuncia', methods=['GET', 'POST'])
 def denuncia():
+    error = False
+    if request.method == 'POST':
+        denuncia = request.form.get('denuncia')
+        lugar =  request.form.get('lugar')
+        fecha = request.form.get('fecha')
+        hora = request.form.get('hora')
+        foto = request.form.get('foto')
+        error = registarDenuncia(session['email'], denuncia, foto, fecha, hora, lugar)
+
     context = {
-        'titulo' : 'Rellena el formulario para registrar tu denuncia.'
+        'titulo' : 'Rellena el formulario para registrar tu denuncia.',
+        'error' : error
     }
-    return render_template('denuncia.html', **context) 
+
+    return render_template('denuncia.html', **context)
+
+@app.route('/listar')
+def listar():
+    denuncias = sacarDenuncias(session['email'])
+    context = {
+        'titulo' : 'Lista de denuncias',
+        'subtitulo' : 'Tus Denuncias'
+    }
+    return render_template('listar.html', denuncias=denuncias)
 
 
 @app.route('/register', methods=['GET', 'POST'])

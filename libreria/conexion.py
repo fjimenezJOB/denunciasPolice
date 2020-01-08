@@ -51,54 +51,8 @@ def crearUsuario(nombre, apellido, email, password, dni):
 
     if yaRegistrado == False:
         collection.insert(
-            {'name': nombre, 'apellidos': apellido, 'email': email, 'password': password, 'activo': 1, 'dni' : dni})
+            {'name': nombre, 'apellidos': apellido, 'email': email, 'password': password, 'activo': 1, 'dni': dni})
     return yaRegistrado
-
-
-def sacarCasa(tipo):
-    """
-        Saca las casas y pisos de la base de datos. Solo saca las que estan activas.
-    """
-    if tipo == 'casa':
-        collection = db['casas']
-    elif tipo == 'piso':
-        collection = db['pisos']
-    else:
-        collection = db['casas']
-
-    vivienda = []
-    resultados = collection.find({'activo': 1}, {'_id': 0})
-
-    for documento in resultados:
-        vivienda.append(documento)
-
-    return vivienda
-
-
-def desactivarVivienda(titulo):
-    """
-        Desactiva las viviendas
-    """
-    collection = db['casas']
-    collection.update_one({'titulo': titulo}, {'$set': {'activo': 0}})
-
-    collection = db['pisos']
-    collection.update_one({'titulo': titulo}, {'$set': {'activo': 0}})
-
-
-def sacarUsuarios():
-    """
-        Saca los usuarios tanto si estan activos como si no.
-    """
-    collection = db['usuarios']
-
-    usuarios = []
-    resultados = collection.find({}, {'_id': 0})
-
-    for documento in resultados:
-        usuarios.append(documento)
-
-    return usuarios
 
 
 def desactivarUsuario(email):
@@ -107,3 +61,27 @@ def desactivarUsuario(email):
     """
     collection = db['usuarios']
     collection.update_one({'email': email}, {'$set': {'activo': 0}})
+
+
+def registarDenuncia(email, denuncia, foto, fecha, hora, lugar):
+    collection = db['denuncias']
+    try:
+        collection.insert(
+            {'email': email, 'denuncia': denuncia, 'fecha': fecha, 'foto': foto, 'lugar': lugar, 'hora': hora, 'activo': 1})
+        error = False
+    except:
+        error = True
+    return error
+
+def sacarDenuncias(email):
+    collection = db['denuncias']
+    user = {}
+    resultados = collection.find(
+        {'email': email, 'activo': 1}, {'_id': 0, 'denuncia': 1, 'fecha': 1, 'foto': 1, 'lugar': 1, 'hora': 1})
+
+    for documento in resultados:
+        user.update(
+            {'denuncia': documento['denuncia'], 'fecha': documento['fecha'], 'foto': documento['foto'], 'lugar': documento['lugar']})
+
+    return user
+
