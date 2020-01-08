@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block title %}
+{{ super() }}
+Login
+{% endblock %}
+
+{% block header %}
+<div class="titulo">
+    <section class="hero is-primary">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+              Login
+            </h1>
+            <h2 class="subtitle">
+              Porfavor, Inicie Sesión
+            </h2>
+          </div>
+        </div>
+      </section>
+</div>
+
+{% endblock %}
+
+{% block main %}
+
+{% if error %}
+<div class="notification is-danger">
+    <h1>Este email no esta registrado en la base de datos, por favor , pongase en contacto con el administrador.</h1> <br>
+  </div>
+{% endif %}
+
+    <form action="{{ url_for('login') }}" method="POST" class="">
+        <label for="email">Email:
+            <input class="input" type="text" name="email" id="" required autofocus>
+        </label>
+        <label for="password">Password:
+            <input class="input" type="password" name="password" id="" required>
+        </label><br><br>
+        <button class="button" type="submit">Entrar</button>
+    </form> <br>
+{% endblock %}
