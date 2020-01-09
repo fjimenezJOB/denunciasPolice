@@ -5,7 +5,7 @@ import datetime
 import os
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = '../static/img/uploads/'
+app.config['UPLOAD_FOLDER'] = 'static/img/uploads/'
 app.secret_key = 'secret_key'
 
 
