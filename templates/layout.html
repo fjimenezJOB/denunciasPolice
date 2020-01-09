@@ -18,9 +18,12 @@
                       {{titulo}}
                     </h1>
                     <h2 class="subtitle">
-                      {{subtitulo}} <br><br>
+                      {{subtitulo}}
+                    </h2>
                       {% if session %}
-                        <p>DNI: {{ session.dni }} </p> <br>
+                      Usuario: {{ session.name }} |
+                      DNI: {{ session.dni }}
+                        <br><br>
                         <a class="button is-danger" href="{{ url_for('salir') }}">Cerrar Sesión</a>
                        {% endif %}
                     </h2>
