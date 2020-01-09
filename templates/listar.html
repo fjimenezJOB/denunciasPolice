@@ -19,19 +19,15 @@ Lista de Denuncias
     </header>
     <div class="card-content">
       <div class="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-        <br>
-        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        {{denuncia.denuncia}}
       </div>
     </div>
     <footer class="card-footer">
-      <a href="#" class="card-footer-item">Save</a>
-      <a href="#" class="card-footer-item">Edit</a>
-      <a href="#" class="card-footer-item">Delete</a>
+      <a href="#" class="card-footer-item">Editar</a>
+      <a href="#" class="card-footer-item">Eliminar</a>
     </footer>
-  </div>
+  </div><br><br>
 
 {% endfor %}
-
+<a class="button is-danger" href="{{ url_for('index') }}">Volver</a>
 {% endblock %}

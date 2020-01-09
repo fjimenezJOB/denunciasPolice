@@ -1,9 +1,11 @@
 from flask import Flask, render_template, redirect, request, session
+from werkzeug.utils import secure_filename
 from libreria.conexion import *
 import datetime
+import os
 
 app = Flask(__name__)
-
+app.config['UPLOAD_FOLDER'] = './uploads'
 app.secret_key = 'secret_key'
 
 
@@ -52,12 +54,15 @@ def index():
 def denuncia():
     error = False
     if request.method == 'POST':
+        foto = request.files['foto']
+        filename = secure_filename(foto.filename)
+        foto.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         denuncia = request.form.get('denuncia')
         lugar =  request.form.get('lugar')
         fecha = request.form.get('fecha')
         hora = request.form.get('hora')
         foto = request.form.get('foto')
-        error = registarDenuncia(session['email'], denuncia, foto, fecha, hora, lugar)
+        error = registarDenuncia(session['email'], denuncia, filename, fecha, hora, lugar)
 
     context = {
         'titulo' : 'Rellena el formulario para registrar tu denuncia.',
@@ -73,6 +78,7 @@ def listar():
         'titulo' : 'Lista de denuncias',
         'subtitulo' : 'Tus Denuncias'
     }
+    print(denuncias)
     return render_template('listar.html', denuncias=denuncias)
 
 

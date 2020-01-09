@@ -75,13 +75,13 @@ def registarDenuncia(email, denuncia, foto, fecha, hora, lugar):
 
 def sacarDenuncias(email):
     collection = db['denuncias']
-    user = {}
+    denuncia = []
     resultados = collection.find(
         {'email': email, 'activo': 1}, {'_id': 0, 'denuncia': 1, 'fecha': 1, 'foto': 1, 'lugar': 1, 'hora': 1})
 
     for documento in resultados:
-        user.update(
+        denuncia.append(
             {'denuncia': documento['denuncia'], 'fecha': documento['fecha'], 'foto': documento['foto'], 'lugar': documento['lugar']})
 
-    return user
+    return denuncia
 
