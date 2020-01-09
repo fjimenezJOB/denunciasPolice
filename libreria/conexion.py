@@ -55,12 +55,12 @@ def crearUsuario(nombre, apellido, email, password, dni):
     return yaRegistrado
 
 
-def desactivarUsuario(email):
+def desactivarDenuncia(email, denuncia):
     """
-        Desactiva usuarios
+        Desactiva denuncia
     """
-    collection = db['usuarios']
-    collection.update_one({'email': email}, {'$set': {'activo': 0}})
+    collection = db['denuncias']
+    collection.update_one({'email': email, 'denuncia': denuncia}, {'$set': {'activo': 0}})
 
 
 def registarDenuncia(email, denuncia, foto, fecha, hora, lugar):
@@ -82,6 +82,5 @@ def sacarDenuncias(email):
     for documento in resultados:
         denuncia.append(
             {'denuncia': documento['denuncia'], 'fecha': documento['fecha'], 'foto': documento['foto'], 'lugar': documento['lugar']})
-
     return denuncia
 

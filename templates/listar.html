@@ -5,6 +5,11 @@ Lista de Denuncias
 {% endblock %}
 
 {% block main %}
+{% if denuncia == Null %}
+<div class="notification is-warning">
+  Que buena suerte, parece que no te ha ocurrido nada todavía, esperemos que sea así.
+</div>
+{% endif %}
 {% for denuncia in denuncias %}
 <div class="card">
     <header class="card-header">
@@ -19,12 +24,25 @@ Lista de Denuncias
     </header>
     <div class="card-content">
       <div class="content">
-        {{denuncia.denuncia}}
+        <ul>
+          <li><strong>Lugar:</strong> <br>{{denuncia.lugar}}</li>
+          <li><strong>Imagen:</strong><br><figure><img src="../static/img/uploads/{{denuncia.foto}}" alt="{{denuncia.foto}}"> <figcaption>Fotografía relacionada con la denuncia</figcaption></figure> </li>
+          <article class="message">
+            <div class="message-header">
+              <p>Explicación de la Denuncia:</p>
+            </div>
+            <div class="message-body">
+              {{ denuncia.denuncia }}
+            </div>
+          </article>
+        </ul>
       </div>
     </div>
     <footer class="card-footer">
-      <a href="#" class="card-footer-item">Editar</a>
-      <a href="#" class="card-footer-item">Eliminar</a>
+      <form action="{{ url_for('desactivar') }}" method="POST">
+        <input type="hidden" name="denuncia" value="{{denuncia.denuncia}}" >
+        <button class="button is-danger" type="submit">Eliminar</button>
+      </form>
     </footer>
   </div><br><br>
 

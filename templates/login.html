@@ -12,13 +12,21 @@ Login
   </div>
 {% endif %}
 
-    <form action="{{ url_for('login') }}" method="POST" class="">
-        <label for="email">Email:
-            <input class="input" type="text" name="email" id="" required autofocus>
-        </label>
-        <label for="password">Password:
-            <input class="input" type="password" name="password" id="" required>
-        </label><br><br>
-        <button class="button" type="submit">Entrar</button>
-    </form> <br>
+<div class="columns">
+    <div class="column">
+        <form action="{{ url_for('login') }}" method="POST" class="">
+            <label for="email">Email:
+                <input class="input" type="text" name="email" id="" required autofocus>
+            </label>
+            <label for="password">Password:
+                <input class="input" type="password" name="password" id="" required>
+            </label><br><br>
+            <button class="button" type="submit">Entrar</button>
+        </form>
+    </div>
+    <div class="column">
+        <a class="button is-success" href="{{ url_for('register') }}">Registro</a>
+    </div>
+  </div>
+
 {% endblock %}
