@@ -5,11 +5,19 @@ Register
 {% endblock %}
 
 {% block main %}
-{% if error %}
-<h1>Este email ya existe en la base de datos !!, por favor vaya a Logearse: <br> <a class="button is-info"
-        href="{{ url_for('login') }}">Login</a></h1>
 
+{% if error %}
+<article class="message is-danger">
+    <div class="message-header">
+      <p>ATENCIÓN!!</p>
+    </div>
+    <div class="message-body">
+        Este email ya existe en la base de datos !!, por favor vaya a Logearse: <br> <a class="button is-info"
+        href="{{ url_for('login') }}">Login</a>  
+    </div>
+  </article>
 {% endif %}
+
 <form action="{{ url_for('register') }}" method="POST" class="">
     <label for="name">Nombre:
         <input class="input" type="text" name="name" id="" auto-focus required>
